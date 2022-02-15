@@ -1,0 +1,50 @@
+{%extends "layout.html"%}
+
+{%block body%}
+
+<h3>Control Panel</h3>
+<hr>
+
+<p>Welcome, <small>{{username}}</small></p>
+
+<hr>
+
+{%if Article_List%}
+  <table class="table table-dark table-hover text-center">
+      <thead>
+          <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Title</th>
+            <th scope="col">Author</th>
+            <th scope="col">Creation Date</th>
+            <th scope="col">Update</th>
+            <th scope="col">Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for Article in Article_List %}
+              <tr>
+                  <td class='ct-label-min-title text-center'>{{Article.id}}</td>
+                  <td class='ct-label-min-title text-center'>
+                    <a href="/articles/article/{{Article.id}}">{{Article.title}}</a></td>
+                  <td class='ct-label-min-title text-center'>{{Article.author.username}}</td>
+                  <td class='ct-label-min-title text-center'>{{Article.created_date}}</td>
+                  <td class='ct-label-min-title text-center'><a href="/articles/updateArticle/{{Article.id}}" type="button" class="btn btn-warning p-1">Update</a></td>
+                  <td class='ct-label-min-title text-center'><a href="/articles/deleteArticle/{{Article.id}}" type="button" class="btn btn-danger p-1">Delete</a></td>
+              </tr>
+          {%endfor%}  
+          </tbody>
+  </table>
+{%else%}
+  <div class="alert alert-danger" style="font-size:20px; font-style:italic;">
+    Not written any articles yet. Time to write?
+  </div>
+
+{%endif%}
+
+<hr>
+<a class="btn btn-primary" href="{%url 'article:addArticle'%}">Add Article</a>
+
+
+
+{%endblock%}

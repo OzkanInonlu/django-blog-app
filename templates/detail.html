@@ -1,0 +1,80 @@
+{%extends "layout.html"%}
+
+
+{%block body%}
+
+<div class="row">
+    <div class="col-lg-8">
+        <!-- Post content-->
+        <article>
+            <!-- Post header-->
+            <header class="mb-4">
+                <!-- Post title-->
+                <h1 class="fw-bolder mb-1">{{article.title}}</h1>
+                <!-- Post meta content-->
+                <div class="text-muted fst-italic mb-2">Posted on {{article.created_date}}</div>
+                <!-- Post categories-->
+                <a class="badge bg-secondary text-decoration-none link-light" href="#!">Web Design</a>
+                <a class="badge bg-secondary text-decoration-none link-light" href="#!">Freebies</a>
+                <div class="text-muted fst-italic mt-3">Published by {{article.author.username}}</div>
+                <hr>
+            </header>
+            <!-- Preview image figure-->
+            
+            <figure class="mb-4">
+                {%if article.article_image%}
+                    <img class="img-fluid rounded" src="{{article.article_image.url}}" alt="..." />
+                {%endif%}
+            </figure>
+            <!-- Post content-->
+            <section class="mb-5">
+                {{article.content | safe}}
+            </section>
+        </article>
+
+        <!-- No Comments ?-->
+        {%if not Comment_List%}
+            <div class="alert alert-danger">
+                No comments found, be the first !
+            </div>
+        {%endif%}
+
+        <!-- Comments section-->
+        <section class="mb-5">
+            <div class="card bg-light">
+                <div class="card-header bg-light text-uppercase text-muted"><h4>Comments</h4></div>
+                <div class="card-body">
+                    <!-- Comment form-->
+                    <form class="form-group mb-4" method="post" action="{% url 'article:comment' article.id %}">
+                        {%csrf_token%}
+                        <label  class="ct-label-min-title text-navy mb-1">Who is writing comment ?</label>
+                        <input type="text" required class="form-control ct-label text-navy" placeholder="ex / BananaLover" name="comment_author" minlength="2" max_length="50">                            
+                        <textarea name="comment_content" class="form-control mt-3" rows="3" placeholder="Join the discussion and leave a comment!"></textarea>
+                        <button type="submit" class="btn btn-warning btn-sm float-end mt-3">Submit</button>
+                    </form>
+                    <!-- Single comment-->
+                    {%if Comment_List%}
+                        {%for comment in Comment_List%}
+                        <div class="d-flex mb-5">
+                            <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
+                            <div class="ms-3">
+                                <div class="fw-bold">{{comment.comment_author}}</div>
+                                <div class="text-muted mb-2" style="font-style: italic;">
+                                    <small id="time">{{comment.comment_date}}</small>
+                                </div>
+                                <div class="card ps-3 pe-1">
+                                    {{comment.comment_content}}
+                                </div>
+                            </div>
+                        </div>
+                        {%endfor%}
+                    {%endif%}
+                </div>
+            </div>
+        </section>
+
+    </div>
+</div>
+
+{%endblock%}
+

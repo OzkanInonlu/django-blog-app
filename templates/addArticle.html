@@ -1,0 +1,25 @@
+{%extends "layout.html"%}
+{% load crispy_forms_tags %}
+
+{%block body%}
+
+
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <h3>Create Article</h3>
+        <hr>
+        <form method="post" enctype="multipart/form-data">
+            {%csrf_token%}
+
+            {{form.media}} <!-- CKEditor-->
+
+            {{form|crispy}}
+            <div class="row">
+                <button class="btn btn-md btn-outline-primary mt-3 col-md-2 offset-md-5" type="submit">Submit</button>
+            </div>
+            
+        </form>
+    </div>
+</div>
+
+{%endblock%}

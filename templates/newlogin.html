@@ -1,0 +1,28 @@
+{%extends "layout.html"%}
+{% load crispy_forms_tags %}
+
+{%block body%}
+
+<div class="modal fade" id="loginUser" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Log In</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true"><i class="fas fa-times"></i></span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form method="post">
+            {%csrf_token%}
+            {{form|crispy}}
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-outline-primary mt-3" type="submit">Log In</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+{%endblock%}
